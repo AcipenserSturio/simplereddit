@@ -1,0 +1,23 @@
+body {
+	background-color: black;
+	color: white;
+	font-family: "Courier New";
+	font-weight: bold;
+}
+table {
+	border-collapse:collapse;
+	font-weight: bold;
+}
+td {
+	vertical-align: top;
+	text-align: left;
+	white-space: pre;
+	padding: 0;
+	line-height: 20px;
+}
+.menu > * > * {
+	white-space: initial;
+}
+.title {
+	white-space: inherit;
+}

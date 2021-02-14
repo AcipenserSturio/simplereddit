@@ -1,0 +1,38 @@
+﻿<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css.css" />
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<table id="posts">
+			<tbody>
+			<tr class="menu"><td colspan="100"><div id="sort">sort:
+				<span onclick="reload_with_param('sort', 'hot')"> hot </span>|
+				<span onclick="reload_with_param('sort', 'new')"> new </span>|
+				<span onclick="reload_with_param('sort', 'rising')"> rising </span>|
+				<span onclick="reload_with_param('sort', 'controversial')"> controversial </span>|
+				<span onclick="reload_with_param('sort', 'top')"> top </span>|
+				<span onclick="reload_with_param('sort', 'gilded')"> gilded </span>
+			</div></td></tr>
+			<tr class="menu"><td colspan="100"><div id="time">links from:
+				<span onclick="reload_with_param('t', 'hour')"> past hour </span>|
+				<span onclick="reload_with_param('t', 'day')"> past 24 hours </span>|
+				<span onclick="reload_with_param('t', 'week')"> past week </span>|
+				<span onclick="reload_with_param('t', 'month')"> past month </span>|
+				<span onclick="reload_with_param('t', 'year')"> past year </span>|
+				<span onclick="reload_with_param('t', 'all')"> all time </span>
+			</div></td></tr>
+			<tr class="menu"><td colspan="100"><div id="nsfw">nsfw:
+				<span onclick="reload_with_param('nsfw', 'none')"> hidden </span>|
+				<span onclick="reload_with_param('nsfw', 'any')"> shown </span>|
+				<span onclick="reload_with_param('nsfw', 'only')"> nsfw only </span>
+			</div></td></tr>
+			<tr><td> </td></tr>
+			</tbody>
+		</table>
+		<div id="next" onload="observenext()" onclick="load_more()">next page</div>
+	</body>
+</html>
