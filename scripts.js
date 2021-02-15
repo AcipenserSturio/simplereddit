@@ -118,9 +118,9 @@ function add_post(post, subreddit_visibility, author_visibility) {
 	var title_text = post["title"];
 	var post_type = post["post_hint"];
 	
-	postdiv = add_element(document.getElementById("posts"), "div", "post", null)
+	postdiv = add_element(document.getElementById("posts"), "div", "post")
 	postdiv.id = post["name"]
-	postinfo = add_element(postdiv, "div", "postinfo", null)
+	postinfo = add_element(postdiv, "div", "postinfo")
 	date = add_element(postinfo, "span", "postcontents", date_text)
 	if (subreddit_visibility) {
 		add_divider(postinfo)
@@ -130,16 +130,30 @@ function add_post(post, subreddit_visibility, author_visibility) {
 	if (author_visibility) {
 		add_divider(postinfo)
 		author = add_element(postinfo, "span", "author", author_text)
-		subreddit.onclick = function() { reload_with_param('r', ('r/' + author_text).trim()) }
+		author.onclick = function() { reload_with_param('r', ('r/' + author_text).trim()) }
 	}
 	
-	postcontents = add_element(postdiv, "div", "postcontents", null)
+	postcontents = add_element(postdiv, "div", "postcontents")
 	title = add_element(postcontents, "div", "title", title_text)
 	
 	if (post_type == "image") {
 		image = add_element(postcontents, "img", "postimage")
-		image.src = post["url_overridden_by_dest"]
+		image.src = post["url"]
 		console.log(image.attributes)
+	}
+	if (post_type == "hosted:video") {
+		video = add_element(postcontents, "video", "postvideo")
+		video.controls = true
+		video.preload = "none"
+		video.poster = post["thumbnail"]
+		resolutions = [720, 360, 240]
+		for (i in resolutions) {
+			try {
+				source = add_element(video, "source", "postvideosource")
+				source.src = post["url"] + "/DASH_" + resolutions[i] + ".mp4"
+				break;
+			} catch {}
+		}
 	}
 	add_linebreak(postdiv)
 
