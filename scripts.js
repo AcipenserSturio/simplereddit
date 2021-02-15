@@ -76,7 +76,7 @@ function build_website(params, data, page_type) {
 	
 	for (var i = 0; i < data["children"].length; i++) {
 		over_18 = data["children"][i]["data"]["over_18"]
-		if (over_18 && nsfw != "none" || !over_18 && nsfw != "only") {
+		if (!over_18 && !nsfw || nsfw == "shown" || over_18 && nsfw == "only") {
 			if (!document.getElementById(data["children"][i]["data"]["name"])) {
 				if (page_type == "user") {
 					author_visibility = false;
