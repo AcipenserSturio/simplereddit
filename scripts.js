@@ -112,36 +112,58 @@ function get_page_type(params) {
 
 function add_post(post, subreddit_visibility, author_visibility) {
 	var padding = "                         "
-	var date_text = DateToString(new Date(post["created"]*1000), "yyyy-MM-dd hh:mm") + " ";
-	var author_text = post["author"].paddingRight(padding) + " ";
-	var subreddit_text = post["subreddit"].paddingRight(padding) + " ";
+	var date_text = DateToString(new Date(post["created"]*1000), "yyyy-MM-dd hh:mm");
+	var subreddit_text = post["subreddit"];
+	var author_text = post["author"];
 	var title_text = post["title"];
+	var post_type = post["post_hint"];
 	
-	row = document.createElement("TR")
-	row.id = post["name"];
-	add_cell(row, "date", date_text)
+	postdiv = add_element(document.getElementById("posts"), "div", "post", null)
+	postdiv.id = post["name"]
+	postinfo = add_element(postdiv, "div", "postinfo", null)
+	date = add_element(postinfo, "span", "postcontents", date_text)
+	if (subreddit_visibility) {
+		add_divider(postinfo)
+		subreddit = add_element(postinfo, "span", "subreddit", subreddit_text)
+		subreddit.onclick = function() { reload_with_param('r', ('r/' + subreddit_text).trim()) }
+	}
+	if (author_visibility) {
+		add_divider(postinfo)
+		author = add_element(postinfo, "span", "author", author_text)
+		subreddit.onclick = function() { reload_with_param('r', ('r/' + author_text).trim()) }
+	}
 	
-	if (subreddit_visibility) {add_cell(row, "subreddit", subreddit_text)}
-	if (author_visibility) {add_cell(row, "author", author_text)}
-	add_cell(row, "title", title_text)
-	document.getElementById("posts").children[0].appendChild(row)
+	postcontents = add_element(postdiv, "div", "postcontents", null)
+	title = add_element(postcontents, "div", "title", title_text)
+	
+	if (post_type == "image") {
+		image = add_element(postcontents, "img", "postimage")
+		image.src = post["url_overridden_by_dest"]
+		console.log(image.attributes)
+	}
+	add_linebreak(postdiv)
 
 }
-function add_cell(row, elementclass, text) {
-	params = new URLSearchParams(window.location.search);
-	var link;
-	if (elementclass == "subreddit") {
-		link = 'r/' + text;
-	} else if (elementclass == "author") {
-		link = 'user/' + text;
+function add_divider(elem) {
+	add_element(postinfo, "_text", null, " | ")
+}
+function add_linebreak(elem) {
+	add_element(elem, "br", null, null)
+}
+function add_element(parent, tag, classname, innertext) {
+	if (tag != "_text") {
+		elem = document.createElement(tag)
+		if (classname) {
+			elem.classList.add(classname)
+		}
+		if (innertext) {
+			elem.innerHTML = innertext
+		}
+	} else {
+		elem = document.createTextNode(innertext)
 	}
-	cell = document.createElement("TD")
-	cell.classList.add(elementclass)
-	if (link) {
-		cell.onclick = function() { reload_with_param('r', link.trim()) };
-	}
-	cell.appendChild(document.createTextNode(text))
-	row.appendChild(cell)
+	parent.appendChild(elem)
+	return elem
 }
 function paramsToString(params) {
 	str = ""
@@ -159,7 +181,7 @@ window.onscroll = function(ev) {load_more()};
 window.onwheel = function(ev) {load_more()};
 function load_more() {
 	console.log("bottom")
-    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2000) {
+    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 4000) {
 		params = new URLSearchParams(window.location.search);
 		params.set("after", after);
 		try_load(params)
