@@ -8,6 +8,10 @@
 	</head>
 	<body>
 		<div id="menu">
+			<div id="nav">subreddit:
+				<input id="subreddit" type="text" size="20" onkeypress="input_updated(event, this, 'r')" /> | user: 
+				<input id="user" type="text" size="20" onkeypress="input_updated(event, this, 'user')" />
+			</div>
 			<div id="sort">sort:
 				<span onclick="reload_with_param('sort', 'hot')"> hot </span>|
 				<span onclick="reload_with_param('sort', 'new')"> new </span>|

@@ -206,3 +206,10 @@ function reload_with_param(param, set) {
 	params.set(param, set);
 	window.location.href = window.location.href.split("?")[0] + "?" + params.toString();
 }
+function input_updated(event, inputelement, param) {
+	var x = event.charCode;
+	if (x == 13) {
+
+		reload_with_param('r', param + '/' + inputelement.value)
+	}
+}

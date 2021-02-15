@@ -22,3 +22,14 @@ table {
     width:100%;
     max-width: 690px;
 }
+video::-internal-media-controls-download-button {
+    display:initial;
+}
+input[type="text"] {
+	border: none;
+	padding: none;
+	background-color : inherit;
+	color: inherit;
+	font: inherit;
+	line-height: inherit;
+}
