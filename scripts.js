@@ -130,7 +130,7 @@ function add_post(post, subreddit_visibility, author_visibility) {
 	if (author_visibility) {
 		add_divider(postinfo)
 		author = add_element(postinfo, "span", "author", author_text)
-		author.onclick = function() { reload_with_param('r', ('r/' + author_text).trim()) }
+		author.onclick = function() { reload_with_param('r', ('user/' + author_text).trim()) }
 	}
 	
 	postcontents = add_element(postdiv, "div", "postcontents")
@@ -139,7 +139,6 @@ function add_post(post, subreddit_visibility, author_visibility) {
 	if (post_type == "image") {
 		image = add_element(postcontents, "img", "postimage")
 		image.src = post["url"]
-		console.log(image.attributes)
 	}
 	if (post_type == "hosted:video") {
 		video = add_element(postcontents, "video", "postvideo")
